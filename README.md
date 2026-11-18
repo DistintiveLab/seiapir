@@ -1,0 +1,56 @@
+# seiapir
+
+Cliente R para o SEI (Sistema Eletrônico de Informações): pesquisa processos,
+obtém documentos e inclui processos e documentos em instâncias que expõem o
+módulo REST [mod-wssei](https://github.com/pengovbr/mod-wssei), com fallback
+de sessão web (SIP) para instâncias sem API.
+
+## Instalação
+
+```r
+# install.packages("pak")
+pak::pak("distintivelab/seiapir")
+```
+
+## Uso
+
+### Backend API (mod-wssei) — ex.: SEI do Ministério do Trabalho
+
+```r
+library(seiapir)
+
+sei_detectar_api("https://processoeletronico.trabalho.gov.br")  # 401 => API disponível
+sei_configurar("https://processoeletronico.trabalho.gov.br", orgao = 0)
+sei_autenticar("sua.sigla")          # senha via askpass/SEI_SENHA
+
+sei_pesquisar(palavrasChave = "licitação", dataInicio = "01/01/2026")
+sei_processo("99999.000000/2026-00")
+sei_documentos(id_procedimento)
+sei_documento_baixar(protocolo, "arquivo.pdf")
+
+sei_criar_processo(tipo = 100000350, especificacao = "Processo de teste")
+sei_incluir_documento_externo(procedimento, "relatorio.pdf", id_serie = 46)
+```
+
+### Backend web (fallback) — ex.: SEI do GDF (sem mod-wssei público)
+
+```r
+sess <- sei_web_login("https://sei.df.gov.br", usuario = "sua.sigla", sigla_orgao = "GDF")
+```
+
+## Autenticação
+
+- `sei_autenticar()` aceita a senha por argumento, pela variável de ambiente
+  `SEI_SENHA` ou, de forma interativa, via `askpass`.
+- O token de sessão fica em memória apenas (nunca em disco/histórico).
+
+## Status
+
+| Instância testada | API REST |
+|---|---|
+| https://processoeletronico.trabalho.gov.br | disponível (v2) |
+| https://sei.df.gov.br | não exposta publicamente — usar backend web |
+
+## Licença
+
+MIT © Rodrigo Borges

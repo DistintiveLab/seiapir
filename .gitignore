@@ -1,0 +1,12 @@
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Renviron*
+docs/
+inst/doc
+/src/*.o
+/src/*.so
+*.tar.gz
+*.Rcheck/
+revdep/

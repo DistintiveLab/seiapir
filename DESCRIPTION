@@ -1,0 +1,26 @@
+Package: seiapi
+Title: Cliente R para o SEI via API REST (mod-wssei) e Web
+Version: 0.1.0
+Authors@R:
+    person("Rodrigo", "Borges", email = "rodrigoesborges@gmail.com", role = c("aut", "cre"), comment = c(ORCID = NULL))
+Description: Pesquisa, obtém e inclui documentos/processos no Sistema
+    Eletrônico de Informações (SEI) por meio do módulo REST mod-wssei
+    (backend 'wssei') ou, como fallback, por emulação da sessão web via
+    SIP (backend 'web', rvest/httr2).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: R (>= 4.1)
+Imports:
+    httr2,
+    curl,
+    jsonlite,
+    rvest
+Suggests:
+    testthat (>= 3.0.0),
+    askpass,
+    keyring
+Config/testthat/edition: 3
+URL: https://github.com/distintivelab/seiapir
+BugReports: https://github.com/distintivelab/seiapir/issues
