@@ -1,0 +1,59 @@
+url: https://distintivelab.github.io/seiapir/
+
+lang: pt-BR
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+home:
+  title: Cliente R para o SEI
+  description: >-
+    Pesquisa processos, obtém documentos e inclui processos e documentos no
+    Sistema Eletrônico de Informações (SEI), via API REST (mod-wssei) ou
+    sessão web (SIP).
+
+navbar:
+  structure:
+    left: [reference, articles]
+    right: [github]
+
+reference:
+  - title: Configuração e autenticação
+    desc: Definição da instância do SEI, login e sessão.
+    contents:
+      - sei_configurar
+      - sei_detectar_api
+      - sei_autenticar
+      - sei_unidades
+      - sei_definir_unidade
+      - sei_sair
+
+  - title: Consulta de processos
+    desc: Pesquisa, consulta e andamentos.
+    contents:
+      - sei_pesquisar
+      - sei_processo
+      - sei_andamentos
+
+  - title: Documentos
+    desc: Listagem, visualização e download de documentos e anexos.
+    contents:
+      - sei_documentos
+      - sei_documento_visualizar
+      - sei_documento_baixar
+      - sei_tipos_documento
+
+  - title: Criação e tramitação
+    desc: Criação de processos, inclusão de documentos e trâmite entre unidades.
+    contents:
+      - sei_tipos_processo
+      - sei_criar_processo
+      - sei_incluir_documento_externo
+      - sei_incluir_documento_interno
+      - sei_enviar_processo
+
+  - title: Backend web (SIP)
+    desc: "Sessão web para instâncias sem API REST (ex.: SEI GDF)."
+    contents:
+      - sei_web_login
