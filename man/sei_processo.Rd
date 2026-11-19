@@ -10,8 +10,9 @@ sei_processo(protocolo)
 \item{protocolo}{Numero no formato 99999.999999/9999-99.}
 }
 \value{
-Resposta da API com dados do processo (inclui idProcedimento).
+Resposta da API com dados do processo (inclui \code{IdProcedimento}).
 }
 \description{
-Consulta um processo pelo numero de protocolo
+Usa \code{GET /processo/consultar} (parametro \code{protocoloFormatado}), pois o
+formato \code{99999.999999/9999-99} contem \code{/} e nao cabe como segmento de path.
 }

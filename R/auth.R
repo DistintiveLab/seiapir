@@ -2,8 +2,12 @@
 #'
 #' Envia sigla de usuario e senha (a mesma do login web do SEI) para
 #' `POST /autenticar` e guarda o token retornado para as demais chamadas.
-#' A senha pode ser informada por argumento, pela variavel de ambiente
-#' `SEI_SENHA` ou, de forma interativa, via `askpass::askpass()`.
+#' No MTE, a sigla e a parte local do e-mail institucional (ex.:
+#' `nome.sobrenome`). A senha pode ser informada por argumento, pela variavel
+#' de ambiente `SEI_SENHA` ou, de forma interativa, via `askpass::askpass()`.
+#'
+#' O id do orgao pode ser descoberto no formulario de login do SIP (valor do
+#' `selOrgao`; ex.: MTE = 3).
 #'
 #' @param usuario Sigla do usuario (default: variavel `SEI_USUARIO`).
 #' @param senha Senha (default: `SEI_SENHA`, senao interativo).
@@ -24,7 +28,7 @@ sei_autenticar <- function(usuario = Sys.getenv("SEI_USUARIO"),
   }
   corpo <- list(usuario = usuario, senha = senha, orgao = as.character(orgao))
   if (!is.null(contexto)) corpo$contexto <- as.character(contexto)
-  out <- .sei_post("/autenticar", corpo)
+  out <- .sei_post("/autenticar", corpo, exigir_token = FALSE)
   if (!isTRUE(out$sucesso)) {
     stop(sprintf("Autenticacao falhou: %s", out$mensagem %||% "erro desconhecido"), call. = FALSE)
   }

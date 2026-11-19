@@ -4,10 +4,10 @@
 \alias{sei_documento_baixar}
 \title{Baixa o anexo de um documento}
 \usage{
-sei_documento_baixar(protocolo, destino = tempfile(fileext = ".bin"))
+sei_documento_baixar(documento, destino = tempfile(fileext = ".bin"))
 }
 \arguments{
-\item{protocolo}{Protocolo do documento anexado.}
+\item{documento}{Id do documento anexado.}
 
 \item{destino}{Caminho do arquivo de saida.}
 }
@@ -15,5 +15,6 @@ sei_documento_baixar(protocolo, destino = tempfile(fileext = ".bin"))
 Invisivelmente, o caminho gravado.
 }
 \description{
-Baixa o anexo de um documento
+Apesar do nome do endpoint (\verb{/documento/baixar/anexo/\{protocolo\}}), o
+parametro e o \strong{id do documento} (inteiro, campo \code{id} de \code{sei_documentos()}).
 }

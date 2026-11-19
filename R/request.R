@@ -1,14 +1,18 @@
 .sei_req <- function(metodo, caminho, corpo = list(), query = list(),
-                     multipart = FALSE, caminho_escapado = FALSE, ...) {
-  .sei_exige_token()
+                     multipart = FALSE, caminho_escapado = FALSE,
+                     exigir_token = TRUE, ...) {
+  if (exigir_token) .sei_exige_token()
   if (!caminho_escapado) {
     caminho <- paste0(
       vapply(strsplit(caminho, "/")[[1]], utils::URLencode, "", reserved = TRUE),
       collapse = "/"
     )
   }
-  req <- httr2::request(file.path(.sei_env$base_api, caminho))
-  req <- httr2::req_headers(req, token = .sei_env$token)
+  url <- paste0(sub("/+$", "", .sei_env$base_api), "/", sub("^/+", "", caminho))
+  req <- httr2::request(url)
+  if (!is.null(.sei_env$token)) {
+    req <- httr2::req_headers(req, token = .sei_env$token)
+  }
   if (!is.null(.sei_env$unidade)) {
     req <- httr2::req_headers(req, unidade = as.character(.sei_env$unidade))
   }
@@ -27,7 +31,12 @@
 .sei_decodificar <- function(resp) {
   txt <- suppressWarnings(httr2::resp_body_string(resp))
   out <- tryCatch(jsonlite::fromJSON(txt, simplifyVector = FALSE), error = function(e) NULL)
-  if (is.null(out)) return(txt)
+  if (is.null(out)) {
+    stop(sprintf(
+      "Resposta nao-JSON (HTTP %s): %s",
+      httr2::resp_status(resp), substr(txt, 1, 200)
+    ), call. = FALSE)
+  }
   if (isFALSE(out$sucesso)) {
     stop(sprintf("SEI: %s", out$mensagem %||% "erro sem mensagem"), call. = FALSE)
   }

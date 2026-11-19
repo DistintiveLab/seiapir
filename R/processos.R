@@ -31,11 +31,15 @@ sei_pesquisar <- function(palavrasChave = NULL, buscaRapida = NULL, descricao = 
 .sei_sem_null <- function(x) x[!vapply(x, is.null, logical(1))]
 
 #' Consulta um processo pelo numero de protocolo
+#'
+#' Usa `GET /processo/consultar` (parametro `protocoloFormatado`), pois o
+#' formato `99999.999999/9999-99` contem `/` e nao cabe como segmento de path.
+#'
 #' @param protocolo Numero no formato 99999.999999/9999-99.
-#' @return Resposta da API com dados do processo (inclui idProcedimento).
+#' @return Resposta da API com dados do processo (inclui `IdProcedimento`).
 #' @export
 sei_processo <- function(protocolo) {
-  .sei_get(file.path("/processo", protocolo))
+  .sei_get("/processo/consultar", query = list(protocoloFormatado = protocolo))
 }
 
 #' Lista documentos de um processo
@@ -57,13 +61,18 @@ sei_documento_visualizar <- function(documento) {
 }
 
 #' Baixa o anexo de um documento
-#' @param protocolo Protocolo do documento anexado.
+#'
+#' Apesar do nome do endpoint (`/documento/baixar/anexo/{protocolo}`), o
+#' parametro e o **id do documento** (inteiro, campo `id` de `sei_documentos()`).
+#'
+#' @param documento Id do documento anexado.
 #' @param destino Caminho do arquivo de saida.
 #' @return Invisivelmente, o caminho gravado.
 #' @export
-sei_documento_baixar <- function(protocolo, destino = tempfile(fileext = ".bin")) {
+sei_documento_baixar <- function(documento, destino = tempfile(fileext = ".bin")) {
   .sei_exige_token()
-  req <- httr2::request(file.path(.sei_env$base_api, "documento/baixar/anexo", protocolo))
+  url <- paste0(sub("/+$", "", .sei_env$base_api), "/documento/baixar/anexo/", documento)
+  req <- httr2::request(url)
   req <- httr2::req_headers(req, token = .sei_env$token)
   resp <- httr2::req_perform(req)
   writeBin(httr2::resp_body_raw(resp), destino)

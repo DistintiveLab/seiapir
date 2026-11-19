@@ -26,6 +26,11 @@ Lista com os dados do login (token, usuario, unidades).
 \description{
 Envia sigla de usuario e senha (a mesma do login web do SEI) para
 \code{POST /autenticar} e guarda o token retornado para as demais chamadas.
-A senha pode ser informada por argumento, pela variavel de ambiente
-\code{SEI_SENHA} ou, de forma interativa, via \code{askpass::askpass()}.
+No MTE, a sigla e a parte local do e-mail institucional (ex.:
+\code{nome.sobrenome}). A senha pode ser informada por argumento, pela variavel
+de ambiente \code{SEI_SENHA} ou, de forma interativa, via \code{askpass::askpass()}.
+}
+\details{
+O id do orgao pode ser descoberto no formulario de login do SIP (valor do
+\code{selOrgao}; ex.: MTE = 3).
 }
