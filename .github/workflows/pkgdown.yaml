@@ -28,8 +28,7 @@ jobs:
           needs: website
 
       - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = !shell(), install = !shell())
-        shell: Rscript {0}
+        run: Rscript -e 'pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)'
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
