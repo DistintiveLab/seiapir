@@ -31,6 +31,13 @@ sei_processo("99999.000000/2026-00")
 sei_documentos(id_procedimento)       # idProcedimento retornado por sei_processo()
 sei_documento_baixar(id_documento, "arquivo.pdf")  # campo `id` de sei_documentos()
 
+# Atenção aos ids: visualizar/baixar exigem o id do DOCUMENTO — campo `id` de
+# `sei_documentos()` ou `idDocumento` em `sei_pesquisar()`. O campo
+# `protocoloFormatadoDocumento` da busca é o id do protocolo (outro objeto):
+# usado nesses verbos gera "acesso não autorizado" ou baixa o arquivo errado.
+res <- sei_pesquisar(palavrasChave = "relatório")
+res$data[[1]]$documento$idDocumento  # <- usar este id em baixar/visualizar
+
 sei_criar_processo(tipo = 100000350, especificacao = "Processo de teste")
 sei_incluir_documento_externo(procedimento, "relatorio.pdf", id_serie = 46)
 ```

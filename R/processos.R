@@ -30,6 +30,22 @@ sei_pesquisar <- function(palavrasChave = NULL, buscaRapida = NULL, descricao = 
 
 .sei_sem_null <- function(x) x[!vapply(x, is.null, logical(1))]
 
+.sei_wrap_dica_documento <- function(expr) {
+  tryCatch(expr, error = function(e) {
+    msg <- conditionMessage(e)
+    if (grepl("Acesso ao documento", msg, fixed = TRUE)) {
+      msg <- paste(
+        msg,
+        "Dica: informe o id do DOCUMENTO (campo `idDocumento` da busca ou `id`",
+        "de `sei_documentos()`), nao o id do protocolo",
+        "(`protocoloFormatadoDocumento` da busca)."
+      )
+      e$message <- msg
+    }
+    stop(e)
+  })
+}
+
 #' Consulta um processo pelo numero de protocolo
 #'
 #' Usa `GET /processo/consultar` (parametro `protocoloFormatado`), pois o
@@ -53,19 +69,30 @@ sei_documentos <- function(procedimento, ...) {
 }
 
 #' Retorna o conteudo HTML de um documento interno
-#' @param documento Id do documento interno.
+#'
+#' O id exigido e o **id do documento**: campo `idDocumento` do resultado de
+#' `sei_pesquisar()` ou campo `id` de `sei_documentos()`. Nao confundir com o
+#' id do protocolo (`protocoloFormatadoDocumento`), que se refere a outro
+#' objeto e gera erro de acesso nao autorizado.
+#'
+#' @param documento Id do documento interno (nao o id do protocolo).
 #' @return String com o conteudo do documento.
 #' @export
 sei_documento_visualizar <- function(documento) {
-  .sei_get(file.path("/documento", as.character(documento), "interno/visualizar"))
+  .sei_wrap_dica_documento(
+    .sei_get(file.path("/documento", as.character(documento), "interno/visualizar"))
+  )
 }
 
 #' Baixa o anexo de um documento
 #'
 #' Apesar do nome do endpoint (`/documento/baixar/anexo/{protocolo}`), o
-#' parametro e o **id do documento** (inteiro, campo `id` de `sei_documentos()`).
+#' parametro e o **id do documento**: campo `idDocumento` do resultado de
+#' `sei_pesquisar()` ou campo `id` de `sei_documentos()`. Passando o id do
+#' protocolo (`protocoloFormatadoDocumento`) o servico pode ate responder,
+#' mas devolve outro conteudo (o protocolo, nao o anexo).
 #'
-#' @param documento Id do documento anexado.
+#' @param documento Id do documento anexado (nao o id do protocolo).
 #' @param destino Caminho do arquivo de saida.
 #' @return Invisivelmente, o caminho gravado.
 #' @export
@@ -74,7 +101,15 @@ sei_documento_baixar <- function(documento, destino = tempfile(fileext = ".bin")
   url <- paste0(sub("/+$", "", .sei_env$base_api), "/documento/baixar/anexo/", documento)
   req <- httr2::request(url)
   req <- httr2::req_headers(req, token = .sei_env$token)
+  req <- httr2::req_error(req, is_error = function(r) FALSE)
   resp <- httr2::req_perform(req)
+  ct <- tolower(httr2::resp_headers(resp)$`content-type` %||% "")
+  if (grepl("json", ct)) {
+    .sei_wrap_dica_documento(.sei_decodificar(resp))
+  }
+  if (httr2::resp_status(resp) >= 400) {
+    stop(sprintf("SEI: HTTP %s ao baixar documento %s", httr2::resp_status(resp), documento), call. = FALSE)
+  }
   writeBin(httr2::resp_body_raw(resp), destino)
   invisible(destino)
 }

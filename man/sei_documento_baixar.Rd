@@ -7,7 +7,7 @@
 sei_documento_baixar(documento, destino = tempfile(fileext = ".bin"))
 }
 \arguments{
-\item{documento}{Id do documento anexado.}
+\item{documento}{Id do documento anexado (nao o id do protocolo).}
 
 \item{destino}{Caminho do arquivo de saida.}
 }
@@ -16,5 +16,8 @@ Invisivelmente, o caminho gravado.
 }
 \description{
 Apesar do nome do endpoint (\verb{/documento/baixar/anexo/\{protocolo\}}), o
-parametro e o \strong{id do documento} (inteiro, campo \code{id} de \code{sei_documentos()}).
+parametro e o \strong{id do documento}: campo \code{idDocumento} do resultado de
+\code{sei_pesquisar()} ou campo \code{id} de \code{sei_documentos()}. Passando o id do
+protocolo (\code{protocoloFormatadoDocumento}) o servico pode ate responder,
+mas devolve outro conteudo (o protocolo, nao o anexo).
 }

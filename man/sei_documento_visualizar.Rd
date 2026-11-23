@@ -7,11 +7,14 @@
 sei_documento_visualizar(documento)
 }
 \arguments{
-\item{documento}{Id do documento interno.}
+\item{documento}{Id do documento interno (nao o id do protocolo).}
 }
 \value{
 String com o conteudo do documento.
 }
 \description{
-Retorna o conteudo HTML de um documento interno
+O id exigido e o \strong{id do documento}: campo \code{idDocumento} do resultado de
+\code{sei_pesquisar()} ou campo \code{id} de \code{sei_documentos()}. Nao confundir com o
+id do protocolo (\code{protocoloFormatadoDocumento}), que se refere a outro
+objeto e gera erro de acesso nao autorizado.
 }
