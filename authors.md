@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/distintivelab/seiapir/blob/pkgdown/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/distintivelab/seiapir/blob/main/DESCRIPTION)
 
 Borges R (2026). *seiapi: Cliente R para o SEI via API REST (mod-wssei)
 e Web*. R package version 0.1.1,
