@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">seiapi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Lista documentos de um processo</h1>
-      <small class="dont-index">Source: <a href="https://github.com/distintivelab/seiapir/blob/main/R/processos.R" class="external-link"><code>R/processos.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/distintivelab/seiapir/blob/pkgdown/R/processos.R" class="external-link"><code>R/processos.R</code></a></small>
       <div class="d-none name"><code>sei_documentos.Rd</code></div>
     </div>
 
@@ -36,7 +36,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sei_documentos</span><span class="op">(</span><span class="va">procedimento</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sei_documentos</span><span class="op">(</span><span class="va">procedimento</span>, <span class="va">...</span>, simplificar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -44,16 +44,25 @@
 
 
 <dl><dt id="arg-procedimento">procedimento<a class="anchor" aria-label="anchor" href="#arg-procedimento"></a></dt>
-<dd><p>Id do processo (inteiro interno; veja <code><a href="sei_processo.html">sei_processo()</a></code>).</p></dd>
+<dd><p>Id do processo (coluna <code>id</code> de <code><a href="sei_processo.html">sei_processo()</a></code> ou
+<code>idProcedimento</code> de <code><a href="sei_pesquisar.html">sei_pesquisar()</a></code>).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Query params adicionais (ex.: <code>sinSomenteAssinados = "S"</code>).</p></dd>
 
+
+<dt id="arg-simplificar">simplificar<a class="anchor" aria-label="anchor" href="#arg-simplificar"></a></dt>
+<dd><p>Se <code>TRUE</code> (padrao), devolve um data.frame com uma linha
+por documento; se <code>FALSE</code>, a resposta bruta da API (lista).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Resposta da API com os documentos do processo.</p>
+    <p>Com <code>simplificar = TRUE</code>, um data.frame com colunas <code>id</code>,
+<code>protocolo</code>, <code>nome</code>, <code>titulo</code>, <code>tipo</code>, <code>mimeType</code>, <code>tamanho</code>, <code>unidade</code>
+e <code>assinado</code> (logico). O total fica no atributo <code>total</code>
+(<code>attr(res, "total")</code>).</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

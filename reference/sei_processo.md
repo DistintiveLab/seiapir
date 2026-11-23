@@ -18,4 +18,4 @@ sei_processo(protocolo)
 
 ## Value
 
-Resposta da API com dados do processo (inclui `IdProcedimento`).
+data.frame de uma linha com `id`, `protocolo` e `tipo` do processo.

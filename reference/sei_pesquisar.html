@@ -11,7 +11,7 @@ e dataFim (formato DD/MM/AAAA) com staTipoData."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">seiapi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ e dataFim (formato DD/MM/AAAA) com staTipoData."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Pesquisa processos na base do SEI</h1>
-      <small class="dont-index">Source: <a href="https://github.com/distintivelab/seiapir/blob/main/R/processos.R" class="external-link"><code>R/processos.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/distintivelab/seiapir/blob/pkgdown/R/processos.R" class="external-link"><code>R/processos.R</code></a></small>
       <div class="d-none name"><code>sei_pesquisar.Rd</code></div>
     </div>
 
@@ -53,6 +53,7 @@ e <code>dataFim</code> (formato DD/MM/AAAA) com <code>staTipoData</code>.</p>
 <span>  idAssunto <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  limit <span class="op">=</span> <span class="fl">50L</span>,</span>
 <span>  start <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>  simplificar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -93,13 +94,23 @@ e <code>dataFim</code> (formato DD/MM/AAAA) com <code>staTipoData</code>.</p>
 <dd><p>Paginacao (registros por pagina / offset).</p></dd>
 
 
+<dt id="arg-simplificar">simplificar<a class="anchor" aria-label="anchor" href="#arg-simplificar"></a></dt>
+<dd><p>Se <code>TRUE</code> (padrao), devolve um data.frame com uma linha
+por resultado; se <code>FALSE</code>, a resposta bruta da API (lista).</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Parametros adicionais repassados como query string.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Resposta da API (lista; resultados em <code>data</code>).</p>
+    <p>Com <code>simplificar = TRUE</code>, um data.frame com colunas <code>idProcedimento</code>,
+<code>protocolo</code>, <code>tipo</code>, <code>unidadeGeradora</code>, <code>dataGeracao</code>, <code>documentoId</code>,
+<code>documentoProtocolo</code>, <code>documentoSerie</code> e <code>documentoNome</code> (colunas de
+documento ficam <code>NA</code> quando o resultado nao traz documento destacado).
+O total de registros da busca fica no atributo <code>total</code>
+(<code>attr(res, "total")</code>).</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

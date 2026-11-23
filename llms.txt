@@ -105,10 +105,12 @@ Listagem, visualização e download de documentos e anexos.
 
 - [`sei_documentos()`](https://distintivelab.github.io/seiapir/reference/sei_documentos.md)
   : Lista documentos de um processo
+- [`sei_documento_info()`](https://distintivelab.github.io/seiapir/reference/sei_documento_info.md)
+  : Consulta metadados de um documento
 - [`sei_documento_visualizar()`](https://distintivelab.github.io/seiapir/reference/sei_documento_visualizar.md)
-  : Retorna o conteudo HTML de um documento interno
+  : Visualiza o conteudo de um documento interno
 - [`sei_documento_baixar()`](https://distintivelab.github.io/seiapir/reference/sei_documento_baixar.md)
-  : Baixa o anexo de um documento
+  : Baixa o arquivo de um documento
 - [`sei_tipos_documento()`](https://distintivelab.github.io/seiapir/reference/sei_tipos_documento.md)
   : Lista tipos (series) de documento disponiveis
 

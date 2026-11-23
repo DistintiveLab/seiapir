@@ -18,6 +18,7 @@ sei_pesquisar(
   idAssunto = NULL,
   limit = 50L,
   start = 0L,
+  simplificar = TRUE,
   ...
 )
 ```
@@ -56,10 +57,20 @@ sei_pesquisar(
 
   Paginacao (registros por pagina / offset).
 
+- simplificar:
+
+  Se `TRUE` (padrao), devolve um data.frame com uma linha por resultado;
+  se `FALSE`, a resposta bruta da API (lista).
+
 - ...:
 
   Parametros adicionais repassados como query string.
 
 ## Value
 
-Resposta da API (lista; resultados em `data`).
+Com `simplificar = TRUE`, um data.frame com colunas `idProcedimento`,
+`protocolo`, `tipo`, `unidadeGeradora`, `dataGeracao`, `documentoId`,
+`documentoProtocolo`, `documentoSerie` e `documentoNome` (colunas de
+documento ficam `NA` quando o resultado nao traz documento destacado). O
+total de registros da busca fica no atributo `total`
+(`attr(res, "total")`).
