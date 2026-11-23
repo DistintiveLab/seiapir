@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">seiapi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +72,13 @@
 <span><span class="fu"><a href="reference/sei_processo.html">sei_processo</a></span><span class="op">(</span><span class="st">"99999.000000/2026-00"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/sei_documentos.html">sei_documentos</a></span><span class="op">(</span><span class="va">id_procedimento</span><span class="op">)</span>       <span class="co"># idProcedimento retornado por sei_processo()</span></span>
 <span><span class="fu"><a href="reference/sei_documento_baixar.html">sei_documento_baixar</a></span><span class="op">(</span><span class="va">id_documento</span>, <span class="st">"arquivo.pdf"</span><span class="op">)</span>  <span class="co"># campo `id` de sei_documentos()</span></span>
+<span></span>
+<span><span class="co"># Atenção aos ids: visualizar/baixar exigem o id do DOCUMENTO — campo `id` de</span></span>
+<span><span class="co"># `sei_documentos()` ou `idDocumento` em `sei_pesquisar()`. O campo</span></span>
+<span><span class="co"># `protocoloFormatadoDocumento` da busca é o id do protocolo (outro objeto):</span></span>
+<span><span class="co"># usado nesses verbos gera "acesso não autorizado" ou baixa o arquivo errado.</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sei_pesquisar.html">sei_pesquisar</a></span><span class="op">(</span>palavrasChave <span class="op">=</span> <span class="st">"relatório"</span><span class="op">)</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">documento</span><span class="op">$</span><span class="va">idDocumento</span>  <span class="co"># &lt;- usar este id em baixar/visualizar</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/sei_criar_processo.html">sei_criar_processo</a></span><span class="op">(</span>tipo <span class="op">=</span> <span class="fl">100000350</span>, especificacao <span class="op">=</span> <span class="st">"Processo de teste"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/sei_incluir_documento_externo.html">sei_incluir_documento_externo</a></span><span class="op">(</span><span class="va">procedimento</span>, <span class="st">"relatorio.pdf"</span>, id_serie <span class="op">=</span> <span class="fl">46</span><span class="op">)</span></span></code></pre></div>
