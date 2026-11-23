@@ -40,6 +40,7 @@ reference:
     desc: Listagem, visualização e download de documentos e anexos.
     contents:
       - sei_documentos
+      - sei_documento_info
       - sei_documento_visualizar
       - sei_documento_baixar
       - sei_tipos_documento

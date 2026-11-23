@@ -16,19 +16,47 @@ test_that("fluxo basico da api (requer credenciais reais)", {
   sei_definir_unidade(unidades[[1]]$id)
 
   res <- sei_pesquisar(palavrasChave = "teste", limit = 3L)
-  skip_if(!identical(res$total, 0) && length(res$data) == 0, "busca sem resultados")
-  expect_true(res$total >= 1)
+  skip_if(nrow(res) == 0, "busca sem resultados")
+  expect_s3_class(res, "data.frame")
+  expect_true(attr(res, "total") >= 1)
+  expect_true(grepl("^[0-9]{5}\\.[0-9]{6}/[0-9]{4}-[0-9]{2}$", res$protocolo[1]))
 
-  proto <- res$data[[1]]$protocoloFormatadoProcedimento
-  proc <- sei_processo(proto)
-  expect_true(grepl("^[0-9]+$", proc$data$IdProcedimento))
+  bruto <- sei_pesquisar(palavrasChave = "teste", limit = 3L, simplificar = FALSE)
+  expect_gte(as.numeric(bruto$total), 1)
 
-  docs <- sei_documentos(proc$data$IdProcedimento)
-  expect_type(docs$data, "list")
+  proc <- sei_processo(res$protocolo[1])
+  expect_s3_class(proc, "data.frame")
+  expect_true(grepl("^[0-9]+$", proc$id))
 
-  if (length(docs$data)) {
-    arq <- sei_documento_baixar(docs$data[[1]]$id)
+  docs <- sei_documentos(proc$id)
+  expect_s3_class(docs, "data.frame")
+  expect_identical(names(docs), c(
+    "id", "protocolo", "nome", "titulo", "tipo", "mimeType",
+    "tamanho", "unidade", "assinado"
+  ))
+
+  if (nrow(docs)) {
+    info <- sei_documento_info(docs$id[1])
+    expect_s3_class(info, "data.frame")
+    expect_equal(nrow(info), 1)
+    expect_true(nzchar(info$id))
+
+    arq <- sei_documento_baixar(docs$id[1], progresso = FALSE)
     expect_true(file.size(arq) > 0)
+    expect_true(nzchar(tools::file_ext(arq)))
+    unlink(arq)
+  }
+
+  internos <- docs$id[grepl("html", docs$mimeType, fixed = TRUE)]
+  if (length(internos)) {
+    txt <- sei_documento_visualizar(internos[1])
+    expect_type(txt, "character")
+    expect_true(nchar(txt) > 0)
+    html <- sei_documento_visualizar(internos[1], como = "html")
+    expect_true(grepl("<body", html, fixed = TRUE))
+    arq <- sei_documento_baixar(internos[1], progresso = FALSE)
+    expect_identical(tools::file_ext(arq), "html")
+    expect_true(any(grepl("<body", readLines(arq, warn = FALSE), fixed = TRUE)))
     unlink(arq)
   }
 })

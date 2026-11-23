@@ -2,22 +2,32 @@
 % Please edit documentation in R/processos.R
 \name{sei_documento_baixar}
 \alias{sei_documento_baixar}
-\title{Baixa o anexo de um documento}
+\title{Baixa o arquivo de um documento}
 \usage{
-sei_documento_baixar(documento, destino = tempfile(fileext = ".bin"))
+sei_documento_baixar(documento, destino = NULL, progresso = interactive())
 }
 \arguments{
-\item{documento}{Id do documento anexado (nao o id do protocolo).}
+\item{documento}{Id do documento (nao o id do protocolo).}
 
-\item{destino}{Caminho do arquivo de saida.}
+\item{destino}{Caminho do arquivo de saida, caminho de um \strong{diretorio}
+(o nome do arquivo e derivado dos metadados) ou \code{NULL} (padrao): grava
+em \code{tempdir()} com o nome detectado.}
+
+\item{progresso}{Se \code{TRUE}, exibe barra de progresso do download
+(padrao: \code{interactive()}).}
 }
 \value{
-Invisivelmente, o caminho gravado.
+Invisivelmente, o caminho gravado (com extensao detectada).
 }
 \description{
 Apesar do nome do endpoint (\verb{/documento/baixar/anexo/\{protocolo\}}), o
-parametro e o \strong{id do documento}: campo \code{idDocumento} do resultado de
-\code{sei_pesquisar()} ou campo \code{id} de \code{sei_documentos()}. Passando o id do
-protocolo (\code{protocoloFormatadoDocumento}) o servico pode ate responder,
-mas devolve outro conteudo (o protocolo, nao o anexo).
+parametro e o \strong{id do documento}: coluna \code{documentoId} de
+\code{sei_pesquisar()} ou coluna \code{id} de \code{sei_documentos()}. Passando o id do
+protocolo (coluna \code{documentoProtocolo} da busca) o servico pode ate
+responder, mas devolve outro conteudo (o protocolo, nao o anexo).
+}
+\details{
+A extensao do arquivo e detectada a partir dos metadados do documento
+(\code{sei_documento_info()}): anexos externos preservam o nome original do
+arquivo; documentos internos sao gravados como \code{.html}.
 }

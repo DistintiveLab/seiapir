@@ -15,6 +15,7 @@ sei_pesquisar(
   idAssunto = NULL,
   limit = 50L,
   start = 0L,
+  simplificar = TRUE,
   ...
 )
 }
@@ -35,10 +36,18 @@ sei_pesquisar(
 
 \item{limit, start}{Paginacao (registros por pagina / offset).}
 
+\item{simplificar}{Se \code{TRUE} (padrao), devolve um data.frame com uma linha
+por resultado; se \code{FALSE}, a resposta bruta da API (lista).}
+
 \item{...}{Parametros adicionais repassados como query string.}
 }
 \value{
-Resposta da API (lista; resultados em \code{data}).
+Com \code{simplificar = TRUE}, um data.frame com colunas \code{idProcedimento},
+\code{protocolo}, \code{tipo}, \code{unidadeGeradora}, \code{dataGeracao}, \code{documentoId},
+\code{documentoProtocolo}, \code{documentoSerie} e \code{documentoNome} (colunas de
+documento ficam \code{NA} quando o resultado nao traz documento destacado).
+O total de registros da busca fica no atributo \code{total}
+(\code{attr(res, "total")}).
 }
 \description{
 Wrapper de \code{GET /processo/pesquisar}. Use \code{palavrasChave} (busca completa,

@@ -10,7 +10,7 @@ sei_processo(protocolo)
 \item{protocolo}{Numero no formato 99999.999999/9999-99.}
 }
 \value{
-Resposta da API com dados do processo (inclui \code{IdProcedimento}).
+data.frame de uma linha com \code{id}, \code{protocolo} e \code{tipo} do processo.
 }
 \description{
 Usa \code{GET /processo/consultar} (parametro \code{protocoloFormatado}), pois o

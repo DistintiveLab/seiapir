@@ -2,19 +2,22 @@
 % Please edit documentation in R/processos.R
 \name{sei_documento_visualizar}
 \alias{sei_documento_visualizar}
-\title{Retorna o conteudo HTML de um documento interno}
+\title{Visualiza o conteudo de um documento interno}
 \usage{
-sei_documento_visualizar(documento)
+sei_documento_visualizar(documento, como = c("texto", "html"))
 }
 \arguments{
 \item{documento}{Id do documento interno (nao o id do protocolo).}
+
+\item{como}{Formato de saida: \code{"texto"} (padrao) extrai o texto puro do
+HTML do documento; \code{"html"} devolve o HTML integral.}
 }
 \value{
-String com o conteudo do documento.
+String (character de comprimento 1) com o conteudo do documento.
 }
 \description{
-O id exigido e o \strong{id do documento}: campo \code{idDocumento} do resultado de
-\code{sei_pesquisar()} ou campo \code{id} de \code{sei_documentos()}. Nao confundir com o
-id do protocolo (\code{protocoloFormatadoDocumento}), que se refere a outro
-objeto e gera erro de acesso nao autorizado.
+O id exigido e o \strong{id do documento}: coluna \code{documentoId} de
+\code{sei_pesquisar()} ou coluna \code{id} de \code{sei_documentos()}. Nao confundir com o
+id do protocolo (coluna \code{documentoProtocolo} da busca), que se refere a
+outro objeto e gera erro de acesso nao autorizado.
 }

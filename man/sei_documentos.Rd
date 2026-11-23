@@ -4,15 +4,22 @@
 \alias{sei_documentos}
 \title{Lista documentos de um processo}
 \usage{
-sei_documentos(procedimento, ...)
+sei_documentos(procedimento, ..., simplificar = TRUE)
 }
 \arguments{
-\item{procedimento}{Id do processo (inteiro interno; veja \code{sei_processo()}).}
+\item{procedimento}{Id do processo (coluna \code{id} de \code{sei_processo()} ou
+\code{idProcedimento} de \code{sei_pesquisar()}).}
 
 \item{...}{Query params adicionais (ex.: \code{sinSomenteAssinados = "S"}).}
+
+\item{simplificar}{Se \code{TRUE} (padrao), devolve um data.frame com uma linha
+por documento; se \code{FALSE}, a resposta bruta da API (lista).}
 }
 \value{
-Resposta da API com os documentos do processo.
+Com \code{simplificar = TRUE}, um data.frame com colunas \code{id},
+\code{protocolo}, \code{nome}, \code{titulo}, \code{tipo}, \code{mimeType}, \code{tamanho}, \code{unidade}
+e \code{assinado} (logico). O total fica no atributo \code{total}
+(\code{attr(res, "total")}).
 }
 \description{
 Lista documentos de um processo

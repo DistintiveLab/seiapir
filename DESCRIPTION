@@ -1,6 +1,6 @@
 Package: seiapi
 Title: Cliente R para o SEI via API REST (mod-wssei) e Web
-Version: 0.1.1
+Version: 0.2.0
 Authors@R:
     person("Rodrigo", "Borges", email = "rodrigoesborges@gmail.com", role = c("aut", "cre"), comment = c(ORCID = NULL))
 Description: Pesquisa, obtém e inclui documentos/processos no Sistema
